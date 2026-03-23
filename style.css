@@ -1,0 +1,52 @@
+#wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #80c9cb;
+}
+
+/* allow fixed-positioned logo to sit relative to viewport */
+body {
+  position: relative;
+}
+
+#describe {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* site logo fixed at top-left */
+.site-logo {
+  position: fixed;
+  /* flush to the viewport edges (respect safe-area on mobile) */
+  top: 0;
+  left: 0;
+  z-index: 999;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* background that surrounds the logo */
+  background: rgba(243, 197, 68, 0.95); /* #f3c544 */
+  /* add padding but keep top/left touching the edges (include safe-area) */
+  padding-right: clamp(8px, 2vw, 28px);
+  padding-bottom: clamp(8px, 2vw, 28px);
+  padding-left: calc(env(safe-area-inset-left, 0px) + 16px);
+  padding-top: calc(env(safe-area-inset-top, 0px) + 8px);
+  border-radius: 0 0 10px 0; /* rounded bottom-right only */
+  box-shadow: 0 8px 22px rgba(2, 6, 23, 0.35);
+  align-items: center;
+  justify-content: center;
+  /* background that surrounds the logo */
+  background: #f3c544;
+  padding: clamp(8px, 2vw, 28px);
+}
+@media (max-width: 480px) {
+  .site-logo img {
+    width: clamp(64px, 24vw, 220px);
+  }
+}
