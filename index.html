@@ -15,6 +15,7 @@
     <div id="wrap">
       <img src="./ride.gif" />
       <h1 id="describe">追擊領先選手中 請稍後</h1>
+      <div id="hint">交替按下A與D鍵加速</div>
       <!-- progress bar inserted below the heading (shows seconds gap to leader) -->
       <div
         class="progress"
@@ -91,7 +92,7 @@
         window.increaseGap = increaseGap;
 
         // keyboard alternation with continuous reduction and idle increase (press 'a' and 'd' alternately)
-        const REDUCE_PER_ALTERNATION = 0.5; // seconds (reduced to slow the catch-up rate)
+        const REDUCE_PER_ALTERNATION = 0.75; // seconds (reduced to slow the catch-up rate)
         let lastKey = null;
         let lastActivity = Date.now();
 
