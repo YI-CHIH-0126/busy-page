@@ -17,6 +17,28 @@ p {
   text-align: center;
 }
 
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.bottle {
+  width: 60px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  margin: 20px 20px;
+  border: 5px solid #f3c544;
+  border-radius: 10px;
+}
+
+#water-bottle:hover {
+  transform: scale(1.2); /* 滑鼠移入時放大 1.2 倍 */
+}
+
+#water-bottle:active {
+  transform: scale(0.9); /* 點擊瞬間縮小，模擬按壓感 */
+}
+
 /* 統一整理 Logo 樣式 */
 .site-logo {
   position: fixed;

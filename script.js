@@ -8,6 +8,7 @@ let lastActivity = Date.now();
 const fill = document.getElementById("progressFill");
 const text = document.getElementById("progressText");
 const heading = document.getElementById("describe");
+const bottle = document.getElementById("bottle");
 
 // 3. 更新畫面的功能 (新手最容易讀懂的部分)
 function updateUI() {
@@ -52,5 +53,16 @@ setInterval(() => {
   }
 }, 500);
 
+// 6. 點擊水壺加速
+bottle.addEventListener("click", () => {
+  gapSeconds -= 5;
+  bottle.style.opacity = "0.5";
+  bottle.style.pointerEvents = "none"; // 暫時不能重複點擊
+  // 10 秒後補給恢復（模擬拿到下一罐水）
+  setTimeout(() => {
+    bottle.style.opacity = "1";
+    bottle.style.pointerEvents = "auto";
+  }, 10000);
+});
 // 網頁開啟時先跑一次
 updateUI();
