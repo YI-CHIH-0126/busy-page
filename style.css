@@ -1,3 +1,12 @@
+/* 基本重置 */
+body,
+h1,
+p {
+  margin: 5px;
+  padding: 0;
+  font-family: sans-serif;
+}
+
 #wrap {
   display: flex;
   flex-direction: column;
@@ -5,80 +14,46 @@
   justify-content: center;
   height: 100vh;
   background-color: #80c9cb;
+  text-align: center;
 }
 
-/* allow fixed-positioned logo to sit relative to viewport */
-body {
-  position: relative;
-}
-
-#describe {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-#hint {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* site logo fixed at top-left */
+/* 統一整理 Logo 樣式 */
 .site-logo {
   position: fixed;
-  /* flush to the viewport edges (respect safe-area on mobile) */
   top: 0;
   left: 0;
   z-index: 999;
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  /* background that surrounds the logo */
-  background: rgba(243, 197, 68, 0.95); /* #f3c544 */
-  /* add padding but keep top/left touching the edges (include safe-area) */
-  padding-right: clamp(8px, 2vw, 28px);
-  padding-bottom: clamp(8px, 2vw, 28px);
-  padding-left: calc(env(safe-area-inset-left, 0px) + 16px);
-  padding-top: calc(env(safe-area-inset-top, 0px) + 8px);
-  border-radius: 0 0 10px 0; /* rounded bottom-right only */
-  box-shadow: 0 8px 22px rgba(2, 6, 23, 0.35);
-  align-items: center;
-  justify-content: center;
-  /* background that surrounds the logo */
   background: #f3c544;
-  padding: clamp(8px, 2vw, 28px);
-}
-@media (max-width: 480px) {
-  .site-logo img {
-    width: clamp(64px, 24vw, 220px);
-  }
+  padding: 16px 24px;
+  border-radius: 0 0 15px 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Progress bar styles */
-.progress {
-  width: min(720px, 86%);
-  max-width: 720px;
-  height: 12px;
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
-  overflow: hidden;
-  margin: 12px auto 6px auto;
+.site-logo img {
+  width: 250px;
+  height: auto;
 }
-.progress-fill {
+
+/* 進度條外框 */
+.progress-container {
+  width: 80%;
+  max-width: 600px;
+  height: 15px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  margin: 20px 0 10px;
+  overflow: hidden;
+}
+
+/* 進度條填充 */
+.progress-bar {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #f3c544, #ffd66b);
-  transition: width 360ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  background: #f3c544;
+  transition: width 0.3s ease-out;
 }
+
 .progress-text {
-  text-align: center;
+  font-weight: bold;
   color: #05232a;
-  font-weight: 600;
-  margin-top: 6px;
-}
-@media (prefers-reduced-motion: reduce) {
-  .progress-fill {
-    transition: none;
-  }
 }

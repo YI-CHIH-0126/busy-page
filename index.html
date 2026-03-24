@@ -1,129 +1,27 @@
-<!DOCTYPE html lang="zh-Hant">
-<html>
+<!doctype html>
+<html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Busy</title>
-    <meta name="description" content="系統忙碌中，請稍後再試" />
+    <title>系統忙碌中</title>
     <link rel="stylesheet" href="./style.css" />
-    <link rel="icon" href="./favicon.ico" />
   </head>
   <body>
     <a href="/" class="site-logo" aria-label="回到首頁">
       <img id="logo" src="./logo.svg" alt="網站標誌" />
     </a>
-    <div id="wrap">
-      <img src="./ride.gif" />
+
+    <main id="wrap">
+      <img src="./ride.gif" alt="單車騎乘中" />
       <h1 id="describe">追擊領先選手中 請稍後</h1>
-      <div id="hint">交替按下A與D鍵加速</div>
-      <!-- progress bar inserted below the heading (shows seconds gap to leader) -->
-      <div
-        class="progress"
-        role="progressbar"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        aria-valuenow="0"
-        aria-label="秒差進度"
-      >
-        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      <p id="hint">交替按下 <strong>A</strong> 與 <strong>D</strong> 鍵加速</p>
+
+      <div class="progress-container">
+        <div class="progress-bar" id="progressFill"></div>
       </div>
       <div id="progressText" class="progress-text">落後：30 秒</div>
-    </div>
-    <script>
-      (function () {
-        const fill = document.getElementById("progressFill");
-        const text = document.getElementById("progressText");
-        const progressRoot = document.querySelector(".progress");
+    </main>
 
-        // seconds gap logic
-        const initialGap = 30; // seconds behind at start
-        let gapSeconds = initialGap;
-
-        const heading = document.getElementById("describe");
-        const originalHeading = heading ? heading.textContent : "";
-        const leadingHeading = "逃離主集團直到終點";
-
-        function updateBar() {
-          const closed = Math.max(
-            0,
-            Math.min(1, (initialGap - gapSeconds) / initialGap),
-          );
-          const pct = Math.round(closed * 100);
-          fill.style.width = pct + "%";
-          if (progressRoot)
-            progressRoot.setAttribute("aria-valuenow", String(pct));
-          if (text) {
-            if (gapSeconds > 0)
-              text.textContent = `落後：${Math.round(gapSeconds)} 秒`;
-            else
-              text.textContent = `領先：${Math.abs(Math.round(gapSeconds))} 秒`;
-          }
-
-          // update heading when entering/exiting leading state
-          if (heading) {
-            if (gapSeconds <= 0 && heading.textContent !== leadingHeading) {
-              heading.textContent = leadingHeading;
-            } else if (
-              gapSeconds > 0 &&
-              heading.textContent !== originalHeading
-            ) {
-              heading.textContent = originalHeading;
-            }
-          }
-        }
-
-        function setGap(seconds) {
-          gapSeconds = Number(seconds) || 0;
-          if (gapSeconds > 999) gapSeconds = 999;
-          if (gapSeconds < -999) gapSeconds = -999;
-          updateBar();
-          return gapSeconds;
-        }
-
-        function decreaseGap(sec) {
-          return setGap(gapSeconds - Math.abs(Number(sec) || 0));
-        }
-        function increaseGap(sec) {
-          return setGap(gapSeconds + Math.abs(Number(sec) || 0));
-        }
-
-        window.setGap = setGap;
-        window.decreaseGap = decreaseGap;
-        window.increaseGap = increaseGap;
-
-        // keyboard alternation with continuous reduction and idle increase (press 'a' and 'd' alternately)
-        const REDUCE_PER_ALTERNATION = 0.75; // seconds (reduced to slow the catch-up rate)
-        let lastKey = null;
-        let lastActivity = Date.now();
-
-        const idleDelay = 1200; // ms until decay (longer idle before gap increases)
-        const decayInterval = 500; // ms per tick (slower tick)
-        const decayStep = 0.25; // seconds added per tick when idle (smaller increase)
-
-        document.addEventListener("keydown", (e) => {
-          const tag = (e.target && e.target.tagName) || "";
-          if (tag === "INPUT" || tag === "TEXTAREA") return;
-          const k = (e.key || "").toLowerCase();
-          if (k !== "a" && k !== "d") return;
-          if (lastKey === null || lastKey !== k) {
-            decreaseGap(REDUCE_PER_ALTERNATION);
-            lastKey = k;
-            lastActivity = Date.now();
-          } else {
-            lastActivity = Date.now();
-          }
-        });
-
-        setInterval(() => {
-          const now = Date.now();
-          if (now - lastActivity > idleDelay) {
-            increaseGap(decayStep);
-          }
-        }, decayInterval);
-
-        // initialize display
-        setGap(initialGap);
-      })();
-    </script>
+    <script src="./script.js"></script>
   </body>
 </html>
